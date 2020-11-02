@@ -1,0 +1,45 @@
+# Laravel Files
+#-------------------------
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.phpunit.result.cache
+.env
+.env.local
+
+
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+# Sublime Text cache files
+#-------------------------
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+*.test.*
+
+# Mac
+#-------------------------
+*.DS_Store
+*.nosync
+
+# 替换预设值的脚本
+#-------------------------
+/public/configtest.php
+/public/favicon.ico
+/public/robots.txt
+/setEnv.php
+.dockerignore
+Dockerfile
+
+.php_cs.cache
+

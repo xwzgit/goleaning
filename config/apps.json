@@ -1,0 +1,6 @@
+{
+  "appName": "golangGinStudy",
+  "appMode": "debug",
+  "appHost": "localhost",
+  "appPort": "8001"
+}
