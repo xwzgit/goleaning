@@ -8,4 +8,5 @@ require (
 	github.com/go-xorm/xorm v0.7.9
 	github.com/gohouse/converter v0.0.3 // indirect
 	github.com/gohouse/gorose v1.0.5 // indirect
+	github.com/jteeuwen/go-bindata v3.0.7+incompatible // indirect
 )

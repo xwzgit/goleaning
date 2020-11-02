@@ -1,38 +1,47 @@
 package main
 
 import (
+    "encoding/json"
     "fmt"
-    "github.com/gin-gonic/gin"
     "goleaning/tool"
+    "log"
+    "net/http"
+    "strings"
 )
 
-func main() {
-    fmt.Printf("hello \n")
-
-    //1,解析配置文件
-
-    cfg, err := tool.ParseConfig("./config/apps.json")
-
-    if err != nil {
-        panic(err)
+func parseParams(w http.ResponseWriter, r *http.Request) {
+    r.ParseForm()       //解析参数，默认是不会解析的
+    fmt.Println(r.Form) //这些信息是输出到服务器端的打印信息
+    fmt.Println("path", r.URL.Path)
+    fmt.Println("scheme", r.URL.Scheme)
+    fmt.Println(r.Form["url_long"])
+    for k, v := range r.Form {
+        fmt.Println("key:", k)
+        fmt.Println("val:", strings.Join(v, ""))
     }
+    fmt.Fprintf(w, "Hello astaxie!") //这个写入到w的是输出到客户端的
 
-    app := gin.Default()
+    getConf(w)
 
-    //用户模块注册路由
-    Router(app)
+}
+
+func main() {
+
+    http.HandleFunc("/", parseParams)        //设置访问的路由
+    err := http.ListenAndServe(":8001", nil) //设置监听的端口
+    if err != nil {
+        log.Fatal("ListenAndServe: ", err)
+    }
+}
+
+var cfg interface{}
+
+func getConf(w http.ResponseWriter, ) {
+    conf, err := tool.Asset("../config/apps.json")
+    if err != nil {
+        fmt.Println(err)
+    }
+    json.Unmarshal(conf, &cfg)
     fmt.Println(cfg)
-    app.Run(cfg.AppHost + ":" + cfg.AppPort)
-}
 
-func Router(router *gin.Engine) {
-    router.GET("/api/hello", helloFmt)
-}
-
-func helloFmt(content *gin.Context) {
-    content.JSON(200, map[string]interface{}{
-        "code":    0,
-        "message": "处理成功",
-        "data":    "",
-    })
 }
