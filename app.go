@@ -21,27 +21,25 @@ func parseParams(w http.ResponseWriter, r *http.Request) {
     }
     fmt.Fprintf(w, "Hello astaxie!") //这个写入到w的是输出到客户端的
 
-    getConf(w)
-
 }
 
 func main() {
+    getConf()
 
     http.HandleFunc("/", parseParams)        //设置访问的路由
     err := http.ListenAndServe(":8001", nil) //设置监听的端口
     if err != nil {
         log.Fatal("ListenAndServe: ", err)
     }
+    fmt.Println(cfg)
 }
 
 var cfg interface{}
 
-func getConf(w http.ResponseWriter, ) {
-    conf, err := tool.Asset("../config/apps.json")
+func getConf() {
+    conf, err := tool.Asset("config/apps.json")
     if err != nil {
         fmt.Println(err)
     }
     json.Unmarshal(conf, &cfg)
-    fmt.Println(cfg)
-
 }
